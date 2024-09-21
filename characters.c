@@ -52,10 +52,29 @@ unsigned int utf8_strlen(char* unicode) {
  *   bytes_for("成龙", 3) -> -1
  */
 unsigned int bytes_for(char* unicode, unsigned int n) {
-  return 0;
+  if(utf8_strlen(unicode) < n){
+    return -1;
+  }
+  unsigned char character[8];
+  unsigned int length = 0;
+  for(unsigned int i = 0; i < n; i++){
+    character[0] = unicode[length];
+    unsigned int byte = num_bytes(character[0]);
+    length += byte;
+  }
+
+  return length;
 }
 
 int main(int argc, char** argv) {
+
+  // printf("%d\n",bytes_for("José", 3));
+  // printf("%d\n",bytes_for("Ülo", 3));
+  // printf("%d\n",bytes_for("José", 4));
+  // printf("%d\n",bytes_for("成龙", 1));
+  // printf("%d\n",bytes_for("成龙", 2));
+  // printf("%d\n",bytes_for("成龙", 3));
+  
   if(argc < 2) {
     printf("Try running with ./welcome your-name\n");
     return 1;
